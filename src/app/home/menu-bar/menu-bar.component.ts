@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {MenuItem, PrimeNGConfig} from 'primeng/api';
 
 @Component({
   selector: 'app-menu-bar',
@@ -8,12 +8,16 @@ import {MenuItem} from 'primeng/api';
 })
 export class MenuBarComponent implements OnInit {
 
-  items: MenuItem[] = [];
-  autoDisplay: boolean = true;
+   @Output() showMenu = new EventEmitter();
+   
+   items: MenuItem[] = [];
+   autoDisplay: boolean = true;
 
-  constructor() { }
+   constructor(private primengConfig: PrimeNGConfig) { }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
+      this.primengConfig.ripple = true;
+      
     this.items = [
       {
          label:'File',
@@ -146,5 +150,9 @@ export class MenuBarComponent implements OnInit {
       }
     ];
   }
+
+  public toogleMenu(){
+     this.showMenu.emit(null);
+  };
 
 }

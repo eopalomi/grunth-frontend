@@ -12,6 +12,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { RippleModule } from 'primeng/ripple';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import { ToastModule } from 'primeng/toast';
@@ -31,6 +32,7 @@ import { ToolbarModule } from 'primeng/toolbar';
     MenubarModule,
     PanelMenuModule,
     PanelModule,
+    RippleModule,
     SplitButtonModule,
     SlideMenuModule,
     ToastModule,
@@ -47,6 +49,7 @@ import { ToolbarModule } from 'primeng/toolbar';
     MenubarModule,
     PanelMenuModule,
     PanelModule,
+    RippleModule,
     SplitButtonModule,
     SlideMenuModule,
     ToastModule,

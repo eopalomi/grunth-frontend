@@ -17,3 +17,8 @@
 .grid-conten {
     height: 95%;
 }
+
+/* Ancho del Menu Lateral*/
+:host ::ng-deep .ng-side-style.ng-sidebar {
+    width: 200px;
+}

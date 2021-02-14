@@ -12,6 +12,13 @@ export class HomePageComponent implements OnInit {
 
   constructor(private messageService: MessageService) { }
 
+
+  opened: boolean = false;
+ 
+  public _toggleSidebar() {
+    this.opened = !this.opened;
+  }
+
   ngOnInit(): void {
     this.items = [
       {

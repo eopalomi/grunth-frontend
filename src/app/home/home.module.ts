@@ -8,7 +8,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-
+import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
   declarations: [SideNavComponent, MenuBarComponent, HomePageComponent, BreadcrumbComponent],
@@ -16,7 +16,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
-    PrimeNGModule
+    PrimeNGModule,
+    SidebarModule.forRoot(),
   ]
 })
 export class HomeModule { }
