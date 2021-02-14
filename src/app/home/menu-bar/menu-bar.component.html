@@ -1,0 +1,36 @@
+<!-- <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <img src="assets/universe_svg.svg" height="30" class="p-mr-2">
+    </ng-template>
+    
+    <ng-template pTemplate="end">
+        <input type="text" pInputText placeholder="Search">
+    </ng-template>
+</p-menubar> -->
+
+<p-toolbar styleClass="toolbarS">
+    <div class="p-toolbar-group-left">
+        <!-- <p-button label="New" icon="pi pi-plus" class="p-mr-2"></p-button>
+        <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>
+            
+        <i class="p-toolbar-separator pi pi-bars p-mr-2" style="vertical-align: middle"></i>
+        
+        <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton> -->
+        <img src="assets/logo.png" height="32" class="p-mr-3">
+        <div class="p-text-bold p-pb-2" style="color:white">GRUNTH</div>
+    </div>
+    
+    <!-- <div class="p-toolbar-group-right">
+        <p-button icon="pi pi-search" class="p-mr-2"></p-button>
+        <p-button icon="pi pi-calendar" styleClass="p-button-success p-mr-2"></p-button>
+        <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+    </div> -->
+
+    <div class="p-toolbar-group-right">
+        <i pBadge class="pi pi-bell p-mr-5" style="font-size: 1.5rem; color: white;" value="2" severity="danger"></i>
+        <i pBadge class="pi pi-calendar p-mr-5" style="font-size: 1.5rem; color: white" [value]="'10+'" severity="danger"></i>
+        <i pBadge class="pi pi-envelope p-mr-2" style="font-size: 1.5rem; color: white" severity="danger"></i>
+        <button pButton type="button" pRipple class="p-button-text" style="color: white" icon="pi pi-chevron-down" label="Erick Palomino" iconPos="right" (click)="menu.toggle($event)"></button>
+        <p-slideMenu #menu [model]="items" [popup]="true" [viewportHeight]="210"></p-slideMenu>
+    </div>
+</p-toolbar>

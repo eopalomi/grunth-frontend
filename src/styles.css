@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/primeicons/primeicons.css';
+body{
+  margin: 6px;
+}
+
+html, body{
+    background-color: var(--surface-b);
+    font-family: var(--font-family);
+    font-size: 12px;
+    height: 100%;
+};
+
+
+
+
+/* :root {
+  --surface-a:#1e1e1e;
+  --surface-b:#121212;
+  --surface-c:hsla(0,0%,100%,.04);
+  --surface-d:hsla(0,0%,100%,.12);
+  --surface-e:#1e1e1e;
+  --surface-f:#262626;
+  --text-color:rgba(255, 255, 255, 0.87);
+  --text-color-secondary:textSecondaryColor;
+  --primary-color:#3F51B5;
+  --primary-color-text:#ffffff;
+  --font-family:Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+} */
+
