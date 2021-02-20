@@ -5,7 +5,11 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BadgeModule } from 'primeng/badge';
+import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { MessagesModule } from 'primeng/messages';
@@ -15,6 +19,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { RippleModule } from 'primeng/ripple';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { SlideMenuModule } from 'primeng/slidemenu';
+import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 
@@ -25,7 +30,11 @@ import { ToolbarModule } from 'primeng/toolbar';
     ButtonModule,
     BadgeModule,
     BreadcrumbModule,
+    CardModule,
+    CalendarModule,
+    DropdownModule,
     InputTextModule,
+    InputTextareaModule,
     MenuModule,
     MessagesModule,
     MessageModule,
@@ -35,6 +44,7 @@ import { ToolbarModule } from 'primeng/toolbar';
     RippleModule,
     SplitButtonModule,
     SlideMenuModule,
+    TableModule,
     ToastModule,
     ToolbarModule
   ],
@@ -42,7 +52,11 @@ import { ToolbarModule } from 'primeng/toolbar';
     ButtonModule,
     BadgeModule,
     BreadcrumbModule,
+    CardModule,
+    CalendarModule,
+    DropdownModule,
     InputTextModule,
+    InputTextareaModule,
     MenuModule,
     MessagesModule,
     MessageModule,
@@ -52,6 +66,7 @@ import { ToolbarModule } from 'primeng/toolbar';
     RippleModule,
     SplitButtonModule,
     SlideMenuModule,
+    TableModule,
     ToastModule,
     ToolbarModule
   ]

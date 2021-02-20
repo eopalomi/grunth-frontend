@@ -1,0 +1,84 @@
+<div [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative', 'background': 'white'}" class="p-shadow-3">
+    <h3 class="title p-mb-0">Cuadro de Resumen</h3>
+    <p-table #dt [value]="data" dataKey="id" [rowHover]="true" [globalFilterFields]="['code', 'name', 'inventoryStatus', 'price']" [rows]="10"  [paginator]="true" styleClass="p-datatable-sm">
+
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-end">
+                <!-- <h4 class="p-m-0">Listado de Productos</h4> -->
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilterGlobal($event)" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.code">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.code}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.name" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.inventoryStatus}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.price">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.price | currency: 'USD'}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="log(product)" styleClass="p-button-sm"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="log(product)"></button> -->
+                    <!-- <button pButton pRipple type="button" icon="pi pi-heart" class="p-button-rounded p-button-help"></button> -->
+                    <!-- <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button> -->
+                    <!-- <p-button label="Small" icon="pi pi-check" styleClass="p-button-sm"></p-button> -->
+                    <!-- <p-button icon="pi pi-check" styleClass="p-button-sm"></p-button> -->
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" styleClass="p-button-sm"></button>
+                    <button pButton pRipple type="button" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain" styleClass="p-button-sm"></button>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+<!-- <div>
+    <pre>{{data | json}}</pre>
+</div> -->
+
+</div>

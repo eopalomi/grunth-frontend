@@ -32,7 +32,7 @@
         <i pBadge class="pi pi-bell p-mr-5" style="font-size: 1.5rem; color: white;" value="2" severity="danger"></i>
         <i pBadge class="pi pi-calendar p-mr-5" style="font-size: 1.5rem; color: white" [value]="'10+'" severity="danger"></i>
         <i pBadge class="pi pi-envelope p-mr-2" style="font-size: 1.5rem; color: white" severity="danger"></i>
-        <button pButton type="button" pRipple class="p-button-text" style="color: white" icon="pi pi-chevron-down" label="Erick Palomino" iconPos="right" (click)="menu.toggle($event)"></button>
+        <button pButton type="button" pRipple class="p-button-text p-mr-2" style="color: white" icon="pi pi-chevron-down" label="Erick Palomino" iconPos="right" (click)="menu.toggle($event)"></button>
         <p-slideMenu #menu [model]="items" [popup]="true" [viewportHeight]="210"></p-slideMenu>
     </div>
 </p-toolbar>

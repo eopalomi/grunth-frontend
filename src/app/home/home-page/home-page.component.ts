@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+}
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -12,12 +19,25 @@ export class HomePageComponent implements OnInit {
 
   constructor(private messageService: MessageService) { }
 
+  row_frame: object[] = [
+    {a1:4, b1:4, c1:4},
+    {a2:2, b2:3, c2:4, d2:3},
+    {a3:6, b3:6}
+  ];
+
 
   opened: boolean = false;
  
   public _toggleSidebar() {
     this.opened = !this.opened;
   }
+  
+  tiles: Tile[] = [
+    {text: 'One', cols: 4, rows: 1, color: 'lightblue'},
+    {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
+    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
+    {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
+  ];
 
   ngOnInit(): void {
     this.items = [

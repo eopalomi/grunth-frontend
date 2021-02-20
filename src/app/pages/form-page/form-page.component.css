@@ -1,0 +1,10 @@
+.title{
+    background-color: #2BBBAD; 
+    height: 25px; 
+    color: azure;     
+    display: flex;    
+    justify-content: center;    
+    align-items: center;
+    border-radius: 4px 4px 0px 0px;
+    margin-top: 0;
+}

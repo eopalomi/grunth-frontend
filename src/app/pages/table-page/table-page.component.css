@@ -1,0 +1,24 @@
+.title{
+    background-color: #2BBBAD; 
+    height: 25px; 
+    color: azure;     
+    display: flex;    
+    justify-content: center;    
+    align-items: center;
+    border-radius: 4px 4px 0px 0px;
+    margin-top: 0;
+};
+
+:host ::ng-deep .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    padding: 0.00rem 1.5rem !important;
+}
+
+:host ::ng-deep .p-datatable-thead tr th {
+    padding: .5rem 1.5rem !important;
+    background: #4D728F;
+    color: white;
+}
+
+:host ::ng-deep .p-datatable-tbody tr td {
+    padding: 0.00rem 1.5rem !important;
+}

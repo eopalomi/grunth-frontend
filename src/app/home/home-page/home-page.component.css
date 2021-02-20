@@ -22,3 +22,18 @@
 :host ::ng-deep .ng-side-style.ng-sidebar {
     width: 200px;
 }
+
+.fila {
+    background-color: rosybrown;
+    border-width: 2px;
+    border-style: solid;
+    border-color: red;
+    margin: 5px
+}
+
+.columna {
+    background-color: royalblue;
+    border-width: 1px;
+    border-style: solid;
+    border-color:lawngreen;
+}
