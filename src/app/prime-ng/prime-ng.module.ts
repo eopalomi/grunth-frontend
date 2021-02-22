@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modulos de Prime NG
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BadgeModule } from 'primeng/badge';
@@ -26,6 +27,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 @NgModule({
   declarations: [],
   imports: [
+    AutoCompleteModule,
     CommonModule,
     ButtonModule,
     BadgeModule,
@@ -49,6 +51,7 @@ import { ToolbarModule } from 'primeng/toolbar';
     ToolbarModule
   ],
   exports: [
+    AutoCompleteModule,
     ButtonModule,
     BadgeModule,
     BreadcrumbModule,

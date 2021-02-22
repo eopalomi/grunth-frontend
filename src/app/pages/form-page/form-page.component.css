@@ -8,3 +8,15 @@
     border-radius: 4px 4px 0px 0px;
     margin-top: 0;
 }
+
+.form-page {
+    margin: 0 auto;
+    position: relative;
+    background: white;
+}
+
+.dev-message{
+    background: #CCE5FF;
+    color: #2B629E;
+    margin: 0 auto;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 
 export interface Product {
@@ -21,7 +21,9 @@ export interface Product {
 })
 export class TablePageComponent implements OnInit {
 
-  statuses: SelectItem[] = [];
+	@Input() PAGE_INFO: any;
+
+	statuses: SelectItem[] = [];
   @ViewChild('dt') dt: any;
   
   data: Product [] = [

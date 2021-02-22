@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+// Modulos
+import { DatatypesModule } from '../datatypes/datatypes.module';
 
 // Librerias Adicionales
 import { PrimeNGModule } from '../prime-ng/prime-ng.module';
@@ -10,6 +14,7 @@ import { MasterPageComponent } from './master-page/master-page.component';
 import { TablePageComponent } from './table-page/table-page.component';
 import { FormPageComponent } from './form-page/form-page.component';
 
+
 @NgModule({
   declarations: [
     MasterPageComponent, 
@@ -18,8 +23,11 @@ import { FormPageComponent } from './form-page/form-page.component';
   ],
   imports: [
     CommonModule,
+    DatatypesModule,
     FormsModule,
-    PrimeNGModule
+    HttpClientModule,
+    PrimeNGModule,
+    ReactiveFormsModule
   ],
   exports:[
     MasterPageComponent, 
