@@ -1,14 +1,27 @@
-<div class="p-field p-grid">
-    <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0" for="lastname4">Lastname</label>
-    <div class="p-col-12 p-md-10">
-        <input id="lastname4" 
-               type="text" 
-               class="p-inputtext-sm ng-invalid ng-dirty" 
-               placeholder="ingrese el nombre"
-               [value]="value"
-               (input)="onInput($event.target.value)"
-               (blur)="onTouch()"
-               pInputText> 
-        <small  class="p-error">Username is not available.</small>
+<!-- Tipo de Dato para Formulario -->
+<ng-container *ngIf="PAGE_INFO.page_type =='F'">
+    <div class="p-field p-grid">
+        <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0" for="lastname4">Lastname</label>
+        <div class="p-col-12 p-md-10">
+            <input id="lastname4" 
+                type="text" 
+                class="p-inputtext-sm ng-invalid ng-dirty" 
+                placeholder="ingrese el nombre"
+                [value]="value"
+                (input)="onInput($event.target.value)"
+                (blur)="onTouch()"
+                pInputText> 
+            <small  class="p-error">Username is not available.</small>
+        </div>
     </div>
-</div> 
+</ng-container>
+
+<!-- Tipo de Dato para Tabla -->
+<ng-container *ngIf="PAGE_INFO.page_type =='T'">
+    <input  type="text"
+            [value]="value"
+            [value]="value"
+            (input)="onInput($event.target.value)"
+            (blur)="onTouch()"
+            pInputText>
+</ng-container>

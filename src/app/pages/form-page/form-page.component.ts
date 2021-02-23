@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { PageService } from '../services/page.service';
 
 interface City {
@@ -14,12 +15,12 @@ interface City {
 })
 export class FormPageComponent implements OnInit {
 
-  @Input() PAGE_INFO: any;    // Informacion Recibida de MasterPage
-  PAGE_CONFIG: any;           // Configuracion de la Pagina
-  registPage!: string[];      // Registros de la Pagina
-  formGroup!: FormGroup;      // Formulario Reactivo
-  showRegDev: boolean = false; // Modo de Desarrollo
-  styleWidth: number = 95;    // Ancho de Pagina
+  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
+  PAGE_CONFIG : any;             // Configuracion de la Pagina
+  registPage !: string[];        // Registros de la Pagina
+  formGroup  !: FormGroup;       // Formulario Reactivo
+  showRegDev  : boolean = false; // Modo de Desarrollo
+  styleWidth  : number = 95;     // Ancho de Pagina
 
   /** datos para cargar solo el ngprime **/
   date3!: Date;
@@ -33,7 +34,8 @@ export class FormPageComponent implements OnInit {
 
   constructor(
     private pageService: PageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -41,18 +43,85 @@ export class FormPageComponent implements OnInit {
 
   }
 
-  filterCountry(event: any) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
-    let query = event.query;
-    for (let i = 0; i < this.countries.length; i++) {
-      let country = this.countries[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
-      }
-    }
+  showAlert(title: any, body: any, type: any) {
+    this.messageService.add({severity:type, summary: title, detail: body});
+  }
 
-    this.filteredCountries = filtered;
+  public ejecutarBoton( btn_type: string, btn_id: any, btn_conten: number): void {
+    // Validar si debe ejecutarse el propag (buscar btn_exepag = true)
+    let btn_info = this.PAGE_CONFIG.page_button.find((item: { btn_id: any; }) => item.btn_id === btn_id);
+
+    // Ejecutar Propag si esta habilitado (true)
+    if (btn_info.btn_exepag){
+      // Mensaje Info Consola
+      console.log("====> Procesando Progag:", this.PAGE_CONFIG.id_page);
+
+      this.pageService.propag(this.PAGE_CONFIG.id_page, btn_id, this.formGroup.value).subscribe( (result: any) => {
+        console.log("====> Completando la ejecucion del Progag:", result) // Mensaje Consola
+        // // Validar Si Existe Redireccion a Otra Pagina
+        // if (result['page_redirect']){
+        //   if (Object.keys(this.dialogRef).length > 0) {
+        //     this.dialogRef.close();
+        //   };
+
+        //   this._router.navigate(['/home/system'], {queryParams: {nu_conten: result['page_redirect']}})
+        // };
+
+        // Validar si Existen Alertas a Mostrar
+        if (result.msg_alert){
+          this.showAlert(result.msg_alert.msg_title, result.msg_alert.msg_body, result.msg_alert.msg_type);
+        };
+        
+        // Validar Si Existe Parametros para agregar al contenedor
+        if (result.page_params){
+          let params: object = result.page_params;
+
+          this.pageService.addParam(params);
+        };
+
+        // Validar Si Existe Paginas a Recargar
+        if (result.pages_to_refresh){
+          // Agregar Paginas a Refrescar
+          this.pageService.addPageRefresh(result.pages_to_refresh);
+        };
+
+        // // Validar Si existe cerrar Dialog
+        // if (result['close_dialog']){
+        //   if (Object.keys(this.dialogRef).length > 0) {
+        //     this.dialogRef.close();
+        //   };
+        // };
+        
+        // // Si hay Popup Abrirlo
+        // if (btn_conten) {
+        //   console.log( '====> Open popup - Button:', btn_id, ' - Container:', btn_conten);
+    
+        //   if (btn_conten != null){
+        //     const dialogRef = this.dialog.open(MasterPageComponent, {
+        //       width: '100vp',
+        //       height: '100vp',
+        //       data: {all_reg: undefined}
+        //     });
+    
+        //     // Enviar Parametro Numero de Contenedor
+        //     dialogRef.componentInstance.CONTENT_DIALOG = btn_conten;
+    
+        //     dialogRef.afterClosed().subscribe(result => {
+        //       console.log('The dialog was closed');
+        //     });
+        //   };
+        // };
+      }, err => {
+        if (err.error.valid === false) {
+          // this.openSnackBar("Mensaje de Error", err.error.error_stack, 'danger');
+        };
+      });
+    };
+  };
+
+
+  log(val: any){
+    console.log("valor:", val)
   }
 
   showRegistDev(){
@@ -96,6 +165,7 @@ export class FormPageComponent implements OnInit {
 
     console.log("formGroup:", this.formGroup.controls.regist_10.pristine)
   };
+  /**********************************************/  
 
   countries: any[] = [
     { name: "Afghanistan", code: "AF" },
@@ -114,7 +184,17 @@ export class FormPageComponent implements OnInit {
 
   filteredCountries: any[] = [];
 
-  log(val: any){
-    console.log("valor:", val)
+  filterCountry(event: any) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.countries.length; i++) {
+      let country = this.countries[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
+    }
+
+    this.filteredCountries = filtered;
   }
 }

@@ -1,8 +1,12 @@
-<div [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative', 'background': 'white'}" class="p-shadow-3">
-    <h3 class="title p-mb-0">Cuadro de Resumen</h3>
-    <p-table #dt [value]="data" dataKey="id" [rowHover]="true" [globalFilterFields]="['code', 'name', 'inventoryStatus', 'price']" [rows]="10"  [paginator]="true" styleClass="p-datatable-sm">
+<div *ngIf="PAGE_CONFIG" [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative', 'background': 'white'}" class="p-shadow-3">
+    <h3 class="title p-mb-1"> Cuadro de Resumen
+        <a href="javascript:void(0)" style="margin-left: 1px;">
+            <i class="pi pi-chevron-circle-down p-ml-2" [style.color]="'white'" style=" vertical-align: middle;" (click)="showRegistDev()"></i>
+        </a>
+    </h3>
+    <p-table #dt [value]="tableData" [autoLayout]="true" dataKey="id" [rowHover]="true" [globalFilterFields]="registPage" [rows]="10" [paginator]="PAGE_CONFIG.paginator" styleClass="p-datatable-sm">
 
-        <ng-template pTemplate="caption">
+        <ng-template pTemplate="caption" *ngIf="PAGE_CONFIG.search">
             <div class="p-d-flex p-ai-center p-jc-end">
                 <!-- <h4 class="p-m-0">Listado de Productos</h4> -->
                 <span class="p-input-icon-left">
@@ -12,73 +16,105 @@
             </div>
         </ng-template>
 
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" *ngIf="PAGE_CONFIG.header_table">
             <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Quantity</th>
-                <th></th>
+                <th *ngFor="let header of PAGE_CONFIG.regist_title | keyvalue: returnZero">{{header.value}}</th>
+                <th> Botones </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td pEditableColumn>
+
+        <ng-template pTemplate="body" let-tableData>
+            <tr >
+                <td pEditableColumn *ngFor="let regist of PAGE_CONFIG.regist_title | keyvalue: returnZero">
+
+                    <ng-container *ngIf="tableData[regist.key + '_est'] == 'E'; then editableRow; else readOnlyRow"></ng-container>
+                    <ng-template #readOnlyRow>
+                        <div>
+                            {{tableData[regist.key]}}
+                        </div>    
+                    </ng-template>
+                    <ng-template #editableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <app-datatype01 [PAGE_INFO]="PAGE_INFO" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{tableData[regist.key]}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </ng-template>
+
+                </td>
+
+                <!-- <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.code">
+                            <input pInputText type="text" [(ngModel)]="data.code">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.code}}
+                            {{data.code}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td> -->
+                <!-- <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="data.name" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{data.name}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.name" required>
+                            <p-dropdown [options]="statuses" [(ngModel)]="data.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.name}}
+                            {{data.inventoryStatus}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
+                            <input pInputText type="text" [(ngModel)]="data.price">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.inventoryStatus}}
+                            {{data.price | currency: 'USD'}}
                         </ng-template>
                     </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.price">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.price | currency: 'USD'}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
+                </td> -->
+
                 <td>
-                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="log(product)" styleClass="p-button-sm"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="log(product)"></button> -->
+                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="log(product)" styleClass="p-button-sm"></button> -->
+                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="log(product)"></button> -->
                     <!-- <button pButton pRipple type="button" icon="pi pi-heart" class="p-button-rounded p-button-help"></button> -->
                     <!-- <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button> -->
                     <!-- <p-button label="Small" icon="pi pi-check" styleClass="p-button-sm"></p-button> -->
                     <!-- <p-button icon="pi pi-check" styleClass="p-button-sm"></p-button> -->
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" styleClass="p-button-sm"></button>
-                    <button pButton pRipple type="button" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain" styleClass="p-button-sm"></button>
-
+                    <!-- <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" styleClass="p-button-sm"></button> -->
+                    <!-- <button pButton pRipple type="button" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain" styleClass="p-button-sm"></button> -->
+                    <!-- [icon]="buttonRow.btn_ico" -->
+                    
+                    <button *ngFor="let buttonRow of PAGE_CONFIG.regist_button" 
+                            (click)="ejecutarBoton('E', buttonRow.btn_id, buttonRow.btn_conten, tableData)" 
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-danger p-button-text" 
+                            styleClass="p-button-sm"
+                            type="button" 
+                            pButton
+                            pRipple>
+                    </button>
+                    
                 </td>
             </tr>
         </ng-template>
     </p-table>
-<!-- <div>
-    <pre>{{data | json}}</pre>
-</div> -->
-
+</div>
+<div *ngIf="showRegDev" 
+     class="p-px-4 p-py-3 p-mt-2 p-shadow-3 dev-message" 
+     [style.width.%]="styleWidth">
+     <pre><b>TABLE DATA: {{tableData | json}}</b></pre>
 </div>

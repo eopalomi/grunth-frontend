@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -15,6 +15,8 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class Datatype08Component implements OnInit, ControlValueAccessor {
+  
+  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
   date!: Date;
 
   isDisabled!: boolean;

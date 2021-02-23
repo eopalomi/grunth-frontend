@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -15,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class Datatype01Component implements OnInit, ControlValueAccessor {
 
+  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
   value!: string;
   isDisabled!: boolean;
   onChange = (_:any) => { }
@@ -47,9 +48,6 @@ export class Datatype01Component implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log("esta disabled:", isDisabled)
     this.isDisabled = isDisabled;
   }
-
-
 }
