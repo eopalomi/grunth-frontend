@@ -1,13 +1,16 @@
-<div class="p-field p-grid">
-    <label for="icon" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Ciudad</label>
+<div *ngIf="registInfo" class="p-field p-grid">
+    <label for="icon" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">{{registInfo.regist_title}}</label>
     <div class="p-col-12 p-md-10">
         <p-dropdown class="p-inputtext-sm"
-                    placeholder="Select a City"
-                    optionLabel="select_key"
-                    [options]="select_options"
-                    [(ngModel)]="selected"
+                    placeholder="Select"
+                    optionLabel="no_compag"
+                    [options]="REGIST_FORM_INFO.regist_opcselect"
+                    [name]="selected?.no_compag"
+                    [(ngModel)]="selected"               
                     (onChange)="setSelect($event.value)"
                     [showClear]="true">
         </p-dropdown>
     </div>
 </div>
+<!-- [(ngModel)]="selected" -->
+<!-- dataKey="REGIST_FORM_INFO.regist_value" -->

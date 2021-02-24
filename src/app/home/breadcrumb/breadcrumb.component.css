@@ -1,0 +1,13 @@
+
+
+.box {
+    background-color: var(--surface-e);
+    text-align: left;
+    /* color: white; */
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    background: rosybrown;
+};
+
+
+

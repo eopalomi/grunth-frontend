@@ -12,11 +12,21 @@
 .form-page {
     margin: 0 auto;
     position: relative;
-    background: white;
+    /* background: white; */
 }
 
 .dev-message{
     background: #CCE5FF;
     color: #2B629E;
     margin: 0 auto;
+}
+
+
+.card {
+    background: var(--surface-e);
+    /* padding: 2rem; */
+    /* box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%); */
+    border-radius: 4px;
+    color: var(--text-color);
+    /* margin-bottom: 2rem; */
 }

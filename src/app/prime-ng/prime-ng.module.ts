@@ -8,6 +8,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BadgeModule } from 'primeng/badge';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -34,6 +36,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     BreadcrumbModule,
     CardModule,
     CalendarModule,
+    DialogModule,
+    DynamicDialogModule,
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
@@ -57,6 +61,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     BreadcrumbModule,
     CardModule,
     CalendarModule,
+    DialogModule,
+    DynamicDialogModule,
     DropdownModule,
     InputTextModule,
     InputTextareaModule,

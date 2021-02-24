@@ -10,8 +10,18 @@ export class PageService {
   url: string = 'http://localhost:3000';
   private enviarParamsSubject = new Subject<object>();
   enviarParamsObservable = this.enviarParamsSubject.asObservable();
-  
+  eventChanged = new Subject<string>();
+
+  public nombreContenedor!: string;
+  public contenedorDialog!: number | null;
+
   PARAMS_PAGE: any = {};
+
+  addContenName(event: string) {
+    this.nombreContenedor = event;
+    
+    this.eventChanged.next(this.nombreContenedor);
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -27,13 +37,18 @@ export class PageService {
     let httpParams = new HttpParams();
     
     httpParams = httpParams.append('id_pagina', id_pagina.toString())
+    
+    // Crear Query Params
+    if (this.PARAMS_PAGE !== undefined){
+      httpParams = httpParams.append('params_page',JSON.stringify(this.PARAMS_PAGE))
+    };
 
     return this.http.get(`${this.url}/pagina`, { params: httpParams })
   }
 
   propag(nu_pagina: string, nu_boton: string, propagBody: object){
     //console.log("Llamando al servicio propag (nu_pagina, nu_boton, propagBody): ", nu_pagina, nu_boton, propagBody);
-
+    
     // Inicializar Objeto Parametros
     let httpParams = new HttpParams();
 
@@ -46,15 +61,12 @@ export class PageService {
     if (nu_boton !== undefined){
       httpParams = httpParams.append('id_boton',  nu_boton);
     }
-
+    
+    
     // Crear Query Params
-    // if (this.PARAMS_PAGE !== undefined){
-    //   httpParams = httpParams.append('params_page', JSON.stringify(this.PARAMS_PAGE))
-    // };
-
-    // Crear Query Params
-    // httpParams = httpParams.append('id_pagina', nu_pagina);
-    // httpParams = httpParams.append('id_boton', nu_boton);
+    if (this.PARAMS_PAGE !== undefined){
+      httpParams = httpParams.append('params_page', JSON.stringify(this.PARAMS_PAGE))
+    };
     
     return this.http.post(`${this.url}/propag`, propagBody, { params: httpParams });
   };

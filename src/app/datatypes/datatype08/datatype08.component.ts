@@ -17,6 +17,10 @@ import { DatePipe } from '@angular/common';
 export class Datatype08Component implements OnInit, ControlValueAccessor {
   
   @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
+  @Input() REGIST_FORM_INFO!: any;       // Informacion Recibida de MasterPage
+  registInfo: any = {};
+
+  label: string ='';
   date!: Date;
 
   isDisabled!: boolean;
@@ -25,7 +29,23 @@ export class Datatype08Component implements OnInit, ControlValueAccessor {
 
   constructor(private datePipe: DatePipe) { }
 
+  ngOnInit(): void {
+    // console.log("this.REGIST_FORM_INFO 8", this.REGIST_FORM_INFO);
+    // this.registInfo = this.REGIST_FORM_INFO.find(item => item.)
+
+    // this.label = this.REGIST_FORM_INFO[0].REGIST_NAME;
+
+    if (this.PAGE_INFO.page_type =='F') {
+      this.registInfo = this.REGIST_FORM_INFO;
+    }
+
+    if (this.PAGE_INFO.page_type =='T') {
+      
+    }
+  }
+
   writeValue(value: any): void {
+    console.log("value", value);
     if (value) {
       this.date = value;
     }
@@ -41,9 +61,6 @@ export class Datatype08Component implements OnInit, ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
-  }
-
-  ngOnInit(): void {
   }
 
   onSelect(value: any){

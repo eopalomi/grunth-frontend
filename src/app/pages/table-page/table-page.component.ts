@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MasterPageComponent } from '../master-page/master-page.component';
 import { PageService } from '../services/page.service';
 
 export interface Product {
@@ -18,7 +20,8 @@ export interface Product {
 @Component({
 	selector: 'app-table-page',
 	templateUrl: './table-page.component.html',
-	styleUrls: ['./table-page.component.css']
+	styleUrls: ['./table-page.component.css'],
+	providers: [DialogService]
 })
 export class TablePageComponent implements OnInit {
 
@@ -27,12 +30,16 @@ export class TablePageComponent implements OnInit {
 	registPage!: string[];      // Registros de la Pagina
 	tableData: any;				// Data para la Tabla
 	showRegDev  : boolean = false; // Modo de Desarrollo
+	ilDevMode   : boolean = true; // Modo de Desarrollo
+	nuPagina: string = '';
+	datatypeInfo: any ={};
 	styleWidth  : number = 95;     // Ancho de Pagina
 	statuses: SelectItem[] = [];
 	@ViewChild('dt') dt: any;
-
+	ref!: DynamicDialogRef;
 
 	constructor(
+		public dialogService: DialogService,
 		private pageService: PageService,
 		private messageService: MessageService
 	) { }
@@ -40,7 +47,14 @@ export class TablePageComponent implements OnInit {
 	ngOnInit(): void {
 		this.getPaginaData();
 
-		this.statuses = [{ label: 'In Stock', value: 'INSTOCK' }, { label: 'Low Stock', value: 'LOWSTOCK' }, { label: 'Out of Stock', value: 'OUTOFSTOCK' }]
+		// Recargar Pagina
+		this.pageService.enviarParamsObservable.subscribe( (res: any) =>{
+			if (res.pages_to_refresh) {
+			  if (res.pages_to_refresh.includes(this.PAGE_INFO.id_page)){
+				this.getPaginaData();
+			  }
+			}
+		})
 	}
 
 	/************** CALL TO SERVICES **************/
@@ -49,10 +63,12 @@ export class TablePageComponent implements OnInit {
 		this.pageService.getPagina(this.PAGE_INFO.id_page).subscribe(result => {
 			// Mensaje Consola
 			console.log("====> Cargango Pagina", this.PAGE_INFO.id_page);
+			
 
 			// Guardar Datos de la Pagina
 			this.PAGE_CONFIG = result;
-
+			this.nuPagina = this.ilDevMode ? ' - ' + this.PAGE_CONFIG.id_page : '';
+			
 			// Obtener los nombres de los registros (Keys del Objeto)
 			this.registPage = Object.keys(this.PAGE_CONFIG.regist_title);
 
@@ -70,6 +86,7 @@ export class TablePageComponent implements OnInit {
 	};
 
 	showAlert(title: any, body: any, type: any) {
+		console.log("mostrando mensaje", {title, body, type}  )
 		this.messageService.add({severity:type, summary: title, detail: body});
 	};
 	
@@ -108,6 +125,7 @@ export class TablePageComponent implements OnInit {
 				// Validar si Existen Alertas a Mostrar
 				if (result.msg_alert){
 					// this.openSnackBar(result['msg_alert'].msg_title, result['msg_alert'].msg_body, result['msg_alert'].msg_type);
+					console.log("=================>result.msg_alert",result.msg_alert)
 					this.showAlert(result.msg_alert.msg_title, result.msg_alert.msg_body, result.msg_alert.msg_type);
 				};
 		
@@ -132,28 +150,29 @@ export class TablePageComponent implements OnInit {
 			//   };
 	  
 			//   // Si hay Popup Abrirlo
-			//   if (btn_conten) {
-			// 	console.log( '====> Open popup - Button:', btn_id, ' - Container:', btn_conten);
-		  
-			// 	if (btn_conten != null){
-			// 	  const dialogRef = this.dialog.open(MasterPageComponent, {
-			// 		width: '100vp',
-			// 		height: '100vp',
-			// 		data: {all_reg: row}
-			// 	  });
-		  
-			// 	  // Enviar Parametro Numero de Contenedor
-			// 	  dialogRef.componentInstance.CONTENT_DIALOG = btn_conten;
-		  
-			// 	  dialogRef.afterClosed().subscribe(result => {
-			// 		console.log('The dialog was closed');
-			// 	  });
-			// 	};
-			//   };
+			  if (btn_conten) {
+				console.log( '====> Open popup - Button:', btn_id, ' - Container:', btn_conten);
+				this.pageService.contenedorDialog = btn_conten;
+				
+				if (btn_conten != null){
+				  this.ref = this.dialogService.open(MasterPageComponent, {
+					showHeader: true,
+					closable: true,
+					contentStyle: {"height": "100vp", "min-width": "450px", "padding":"0", "overflow": "auto"},
+					baseZIndex: 10000
+				  });
+				  
+				  this.ref.onClose.subscribe((car:any ) => {
+					this.pageService.contenedorDialog = null;
+					console.log("'The dialog was closed'", this.pageService.contenedorDialog);
+				  });
+				};
+			  };
 			}, err => {
 			  // Mostrar los mensaje de error
 			  if (err.error.valid === false) {
 				// this.openSnackBar("Mensaje de Error", err.error.error_stack, 'danger');
+				this.showAlert("Mensaje de Error", err.error.error_stack, 'error');
 			  };
 			})
 		  } else if (btn_conten) {
@@ -191,186 +210,4 @@ export class TablePageComponent implements OnInit {
 	returnZero() {
 		return 0;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	data: Product[] = [
-		{
-			id: '1000',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1001',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1002',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1003',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1004',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1000',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1001',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1002',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1003',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1004',
-			code: 'f230fh0g3',
-			name: 'zapato Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1000',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1001',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1002',
-			code: 'f230fh0g3',
-			name: 'Bamboo Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1003',
-			code: 'f230fh0g3',
-			name: 'reloj Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		}, {
-			id: '1004',
-			code: 'f230fh0g3',
-			name: 'camara Watch',
-			description: 'Product Description',
-			image: 'bamboo-watch.jpg',
-			price: 65,
-			category: 'Accessories',
-			quantity: 24,
-			inventoryStatus: 'INSTOCK',
-			rating: 5
-		},
-	];
 }

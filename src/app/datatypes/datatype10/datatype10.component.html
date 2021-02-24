@@ -1,0 +1,13 @@
+<div class="p-field p-grid">
+    <label for="autocomplete" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">{{registInfo.regist_title}}</label>
+    <div class="p-col-12 p-md-10">
+        <p-autoComplete class="p-inputtext-sm" 
+                        [(ngModel)]="selectedData" 
+                        [suggestions]="filteredData" 
+                        (completeMethod)="filterData($event)" 
+                        (onSelect)="onSelect($event)" 
+                        field="no_compag" 
+                        [minLength]="1">
+        </p-autoComplete>
+    </div>
+</div>

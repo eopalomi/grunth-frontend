@@ -1,6 +1,6 @@
-<div *ngIf="PAGE_CONFIG" [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative', 'background': 'white'}" class="p-shadow-3">
-    <h3 class="title p-mb-1"> Cuadro de Resumen
-        <a href="javascript:void(0)" style="margin-left: 1px;">
+<div *ngIf="PAGE_CONFIG" [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative', 'background': 'white'}" class="p-shadow-3 card">
+    <h3 class="title p-mb-1"> Cuadro de Resumen {{nuPagina}}
+        <a *ngIf="ilDevMode" href="javascript:void(0)" style="margin-left: 1px;">
             <i class="pi pi-chevron-circle-down p-ml-2" [style.color]="'white'" style=" vertical-align: middle;" (click)="showRegistDev()"></i>
         </a>
     </h3>
@@ -36,14 +36,13 @@
                     <ng-template #editableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <app-datatype01 [PAGE_INFO]="PAGE_INFO" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                                <app-datatype01 [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype01>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{tableData[regist.key]}}
                             </ng-template>
                         </p-cellEditor>
                     </ng-template>
-
                 </td>
 
                 <!-- <td pEditableColumn>
@@ -100,7 +99,7 @@
                     
                     <button *ngFor="let buttonRow of PAGE_CONFIG.regist_button" 
                             (click)="ejecutarBoton('E', buttonRow.btn_id, buttonRow.btn_conten, tableData)" 
-                            icon="pi pi-pencil"
+                            [icon]="buttonRow.btn_ico_prifaces"
                             class="p-button-rounded p-button-danger p-button-text" 
                             styleClass="p-button-sm"
                             type="button" 
@@ -113,6 +112,9 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-toast></p-toast>
+
 <div *ngIf="showRegDev" 
      class="p-px-4 p-py-3 p-mt-2 p-shadow-3 dev-message" 
      [style.width.%]="styleWidth">

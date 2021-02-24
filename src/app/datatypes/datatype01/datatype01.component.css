@@ -1,0 +1,8 @@
+.hide {
+    display: none !important;
+}
+
+::ng-deep input.input:disabled {
+    /* style declaration here */
+    opacity: 20;
+}

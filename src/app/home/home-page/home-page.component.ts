@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
+import { PageService } from 'src/app/pages/services/page.service';
 
 export interface Tile {
   color: string;
@@ -17,7 +18,9 @@ export interface Tile {
 export class HomePageComponent implements OnInit {
   items: MenuItem[] = [];
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private pageService: PageService) { }
+
+  nombreModulo!: string;
 
   row_frame: object[] = [
     {a1:4, b1:4, c1:4},
