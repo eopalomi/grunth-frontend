@@ -7,6 +7,7 @@
     align-items: center;
     border-radius: 4px 4px 0px 0px;
     margin-top: 0;
+    font-weight: 500;
 }
 
 .form-page {
@@ -29,4 +30,8 @@
     border-radius: 4px;
     color: var(--text-color);
     /* margin-bottom: 2rem; */
+}
+
+:host ::ng-deep .p-button {
+    border: none !important;
 }

@@ -8,12 +8,12 @@ import { SideNavComponent } from './home/side-nav/side-nav.component';
 import { TablePageComponent } from './pages/table-page/table-page.component';
 
 const routes: Routes = [
-  {path:'home', component: HomePageComponent, children: ROUTES },
-  {path:'table', component: BreadcrumbComponent},
+  {path:'home', component: HomePageComponent, children: ROUTES},
+  {path:'**', component: HomePageComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

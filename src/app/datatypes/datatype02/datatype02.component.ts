@@ -3,25 +3,26 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatatypeService } from '../services/datatype.service';
 
 @Component({
-  selector: 'app-datatype01',
-  templateUrl: './datatype01.component.html',
-  styleUrls: ['./datatype01.component.css'],
+  selector: 'app-datatype02',
+  templateUrl: './datatype02.component.html',
+  styleUrls: ['./datatype02.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => Datatype01Component),
+      useExisting: forwardRef(() => Datatype02Component),
       multi: true
     }
   ]
 })
-export class Datatype01Component implements OnInit, ControlValueAccessor {
+export class Datatype02Component implements OnInit, ControlValueAccessor {
 
   @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
   
   @Input() REGIST_NAME: any;       
   @Input() REGIST_TABLE_INFO: any;
   @Input() REGIST_FORM_INFO!: any;   
-  @Input() TITLE!: any;   
+  @Input() TITLE!: any;
+
   registInfo: any = {};
   hideIs: boolean = false; // Esconder
   isReadOnly: boolean = false; // Solo Lectura
@@ -76,4 +77,5 @@ export class Datatype01Component implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
+
 }

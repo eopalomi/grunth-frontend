@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlPages: 'https://dev01-api-rest.herokuapp.com'
 };

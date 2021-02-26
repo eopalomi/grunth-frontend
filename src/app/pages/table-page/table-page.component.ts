@@ -29,6 +29,7 @@ export class TablePageComponent implements OnInit {
 	PAGE_CONFIG: any;           // Configuracion de la Pagina
 	registPage!: string[];      // Registros de la Pagina
 	tableData: any;				// Data para la Tabla
+	rowSelected: any;				// Data para la Tabla
 	showRegDev  : boolean = false; // Modo de Desarrollo
 	ilDevMode   : boolean = true; // Modo de Desarrollo
 	nuPagina: string = '';
@@ -56,6 +57,10 @@ export class TablePageComponent implements OnInit {
 			}
 		})
 	}
+
+	selectAll() {
+		this.rowSelected = this.tableData;
+	};
 
 	/************** CALL TO SERVICES **************/
 	getPaginaData() {
@@ -175,9 +180,28 @@ export class TablePageComponent implements OnInit {
 				this.showAlert("Mensaje de Error", err.error.error_stack, 'error');
 			  };
 			})
-		  } else if (btn_conten) {
+		} else if (btn_conten) {
 			console.log( 'Abriendo Popup Boton:', btn_id, ' - Contenedor:', btn_conten);
-	  
+
+			if (btn_conten) {
+				console.log( '====> Open popup - Button:', btn_id, ' - Container:', btn_conten);
+				this.pageService.contenedorDialog = btn_conten;
+				
+				if (btn_conten != null){
+				  this.ref = this.dialogService.open(MasterPageComponent, {
+					showHeader: true,
+					closable: true,
+					contentStyle: {"height": "100vp", "min-width": "450px", "padding":"0", "overflow": "auto"},
+					baseZIndex: 10000
+				  });
+				  
+				  this.ref.onClose.subscribe((car:any ) => {
+					this.pageService.contenedorDialog = null;
+					console.log("'The dialog was closed'", this.pageService.contenedorDialog);
+				  });
+				};
+			};
+			  
 			// if (btn_conten != null){
 			//   const dialogRef = this.dialog.open(MasterPageComponent, {
 			// 	width: '100vp',
@@ -192,7 +216,7 @@ export class TablePageComponent implements OnInit {
 			// 	console.log('The dialog was closed');
 			//   });
 			// };
-		  };
+		};
 	}
 
 	applyFilterGlobal($event: Event) {

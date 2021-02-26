@@ -6,6 +6,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BadgeModule } from 'primeng/badge';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
@@ -34,6 +36,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     ButtonModule,
     BadgeModule,
     BreadcrumbModule,
+    CheckboxModule,
+    ChipModule,
     CardModule,
     CalendarModule,
     DialogModule,
@@ -59,6 +63,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     ButtonModule,
     BadgeModule,
     BreadcrumbModule,
+    CheckboxModule,
+    ChipModule,
     CardModule,
     CalendarModule,
     DialogModule,

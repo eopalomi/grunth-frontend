@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
 
-  url: string = 'http://localhost:3000';
+  url: string = environment.urlPages;
   private enviarParamsSubject = new Subject<object>();
   enviarParamsObservable = this.enviarParamsSubject.asObservable();
   eventChanged = new Subject<string>();
@@ -28,7 +29,7 @@ export class PageService {
   getConten(id_conten: number) {
     let httpParams = new HttpParams();
     
-    httpParams = httpParams.append('id_conten', id_conten.toString())
+    httpParams = httpParams.append('id_conten', id_conten?.toString())
 
     return this.http.get(`${this.url}/contenedor`, { params: httpParams })
   }
@@ -36,7 +37,7 @@ export class PageService {
   getPagina(id_pagina: number){
     let httpParams = new HttpParams();
     
-    httpParams = httpParams.append('id_pagina', id_pagina.toString())
+    httpParams = httpParams.append('id_pagina', id_pagina?.toString())
     
     // Crear Query Params
     if (this.PARAMS_PAGE !== undefined){
