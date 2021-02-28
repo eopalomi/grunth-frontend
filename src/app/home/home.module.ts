@@ -11,10 +11,10 @@ import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { SidebarModule } from 'ng-sidebar';
 
 // Componentes del Modulo
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 
 @NgModule({

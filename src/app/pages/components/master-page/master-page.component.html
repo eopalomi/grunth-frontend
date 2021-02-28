@@ -1,0 +1,18 @@
+<ng-container *ngIf="CONTEN_CONFIG">
+
+    <!-- Renderiza La Fila  -->
+    <div *ngFor="let row of CONTEN_CONFIG.conten_grid" class="p-grid p-jc-evenly p-m-2 fila">
+        <!-- Renderiza La Columna  -->
+        <div *ngFor ="let column of row | keyvalue"
+             [class]="'p-col-12 ' + 'p-md-' + column.value + ' columna p-py-1 p-my-1'">
+            <!-- Renderiza La Pagina  -->
+            <ng-container *ngFor="let pageInfo of CONTEN_CONFIG.conten_pages">
+                <ng-container *ngIf="pageInfo.grid_id == column.key">
+                    <app-form-page  [PAGE_INFO]="pageInfo" *ngIf="pageInfo.page_type == 'F'"></app-form-page>
+                    <app-table-page [PAGE_INFO]="pageInfo" *ngIf="pageInfo.page_type == 'T'"></app-table-page>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <p-toast></p-toast>
+</ng-container>

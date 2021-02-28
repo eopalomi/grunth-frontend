@@ -17,6 +17,7 @@ export class DatatypeService {
     let getConte  : string = regist_name + "_conten";
     let getDatsel : string = regist_name + "_datsel";
     let getPagRef : string = regist_name + "_pagref";
+    let getPlHold : string = regist_name + "_plhold";
 
     registInfo.regist_name      = regist_name,
     registInfo.regist_value     = data[regist_name],
@@ -27,6 +28,7 @@ export class DatatypeService {
     registInfo.regist_conten    = data[getConte],
     registInfo.regist_opcselect = data[getDatsel],
     registInfo.regist_pagref    = data[getPagRef]
+    registInfo.regist_plholder  = data[getPlHold]
 
     return registInfo;
 }

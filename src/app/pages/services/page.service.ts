@@ -11,6 +11,7 @@ export class PageService {
   url: string = environment.urlPages;
   private enviarParamsSubject = new Subject<object>();
   enviarParamsObservable = this.enviarParamsSubject.asObservable();
+  
   eventChanged = new Subject<string>();
 
   public nombreContenedor!: string;

@@ -10,9 +10,13 @@ import { DatatypesModule } from '../datatypes/datatypes.module';
 import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 // Componentes del Modulo
-import { MasterPageComponent } from './master-page/master-page.component';
-import { TablePageComponent } from './table-page/table-page.component';
-import { FormPageComponent } from './form-page/form-page.component';
+import { MasterPageComponent } from './components/master-page/master-page.component';
+import { TablePageComponent } from './components/table-page/table-page.component';
+import { FormPageComponent } from './components/form-page/form-page.component';
+
+// Providers
+import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -33,6 +37,8 @@ import { FormPageComponent } from './form-page/form-page.component';
     MasterPageComponent, 
     TablePageComponent, 
     FormPageComponent
-  ]
+  ],
+  
+  providers: [DialogService, MessageService]
 })
 export class PagesModule { }

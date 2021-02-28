@@ -1,0 +1,107 @@
+<div *ngIf="PAGE_CONFIG" [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative'}" class="p-shadow-3">
+    <h3 class="title p-mb-1"> {{PAGE_CONFIG.page_title}} {{nuPagina}}
+        <a *ngIf="ilDevMode" href="javascript:void(0)" style="margin-left: 1px;">
+            <i class="pi pi-chevron-circle-down p-ml-2" [style.color]="'white'" style=" vertical-align: middle;" (click)="showRegistDev()"></i>
+        </a>
+    </h3>
+    <p-table #dt 
+             [value]="tableData" 
+             [(selection)]="rowSelected" 
+             dataKey="id" 
+             [autoLayout]="true" 
+             [rowHover]="true" 
+             [globalFilterFields]="registPage" 
+             [rows]="10" 
+             [paginator]="PAGE_CONFIG.paginator"  
+             [rowsPerPageOptions]="[10,20,30,50,100]" 
+             styleClass="p-datatable-sm">
+
+        <ng-template pTemplate="caption" *ngIf="PAGE_CONFIG.search">
+            <div class="p-d-flex p-ai-center p-jc-end">
+                <!-- <h4 class="p-m-0">Listado de Productos</h4> -->
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilterGlobal($event)" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" *ngIf="PAGE_CONFIG.header_table" >
+            <tr>
+                <th *ngIf="PAGE_CONFIG.checkbox_table" style="width: 2.5em">
+                    <p-tableHeaderCheckbox (change)="selectAll();"></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let header of PAGE_CONFIG.regist_title | keyvalue: returnZero">{{header.value}}</th>
+                <th *ngIf="PAGE_CONFIG.regist_button"> Botones </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-tableData>
+            <tr >
+                <td *ngIf="PAGE_CONFIG.checkbox_table">
+                    <!-- <p-tableCheckbox [value]="tableData" [binary]="true"></p-tableCheckbox> -->
+                    <p-checkbox [value]="tableData" [(ngModel)]="rowSelected"></p-checkbox>
+                </td>
+                <td pEditableColumn *ngFor="let regist of PAGE_CONFIG.regist_title | keyvalue: returnZero">
+
+                    <ng-container *ngIf="tableData[regist.key + '_est'] == 'E'; then editableRow; else readOnlyRow"></ng-container>
+                    <ng-template #readOnlyRow>
+                        <div>
+                            <ng-container [ngSwitch]="PAGE_CONFIG.regist_type[regist.key]">
+                                <app-datatype02 *ngSwitchCase="2" [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype02>
+                                <app-datatype03 *ngSwitchCase="3" [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype03>
+                                <div *ngSwitchDefault>{{tableData[regist.key]}}</div>
+                            </ng-container>
+                            
+                        </div>    
+                    </ng-template>
+                    <ng-template #editableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <app-datatype01 [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{tableData[regist.key]}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </ng-template>
+                </td>
+                <td *ngIf="PAGE_CONFIG.regist_button">                    
+                    <button *ngFor="let buttonRow of PAGE_CONFIG.regist_button" 
+                            (click)="ejecutarBoton('E', buttonRow.btn_id, buttonRow.btn_conten, tableData)" 
+                            [icon]="buttonRow.btn_ico_prifaces"
+                            [ngStyle]="{'color': buttonRow.btn_color}"
+                            class="p-button-rounded p-button-danger p-button-text" 
+                            styleClass="p-button-sm"
+                            type="button" 
+                            pButton
+                            pRipple>
+                    </button>
+                    
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="p-d-flex p-jc-center p-py-2">
+        <ng-container  *ngFor="let buttonPage of PAGE_CONFIG.page_button">
+            <p-button styleClass="p-button-sm"
+                      [label]="buttonPage.btn_name"
+                      [icon]="buttonPage.btn_ico_prifaces"
+                      (click)="ejecutarBoton('G', buttonPage.btn_id, buttonPage.btn_conten)"
+                      [style]="{'color': 'white'}"
+                      class="p-ml-2">
+            </p-button>
+        </ng-container>
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="showRegDev" 
+     class="p-px-4 p-py-3 p-mt-2 p-shadow-3 dev-message" 
+     [style.width.%]="styleWidth">
+     <pre><b style="color: #2B629E;">TABLE DATA: {{tableData | json}}</b></pre>
+     <pre><b style="color: blue;">ROWS SELECTED: {{rowSelected | json}}</b></pre>
+</div>
