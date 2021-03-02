@@ -4,9 +4,12 @@
             <i class="pi pi-chevron-circle-down p-ml-2" [style.color]="'white'" style=" vertical-align: middle;" (click)="showRegistDev()"></i>
         </a>
     </h3>
-    <div [formGroup]="formGroup" class="p-fluid p-input-outline p-px-5">
+    <div [formGroup]="formGroup" class="p-fluid p-input-filled p-px-5">
         <ng-container *ngFor="let registName of registPage">
             <ng-container [ngSwitch]="PAGE_CONFIG.regist_type[registName]">
+
+                <!-- <ng-container *ngIf="datatypeServive.buildDatatypeInfo_v2(registName, PAGE_CONFIG.regist_title[regist_name], PAGE_CONFIG.data_page[0]); let info_dt"></ng-container> -->
+                
                 <app-datatype06 *ngSwitchCase="6"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype06>
                 <app-datatype01 *ngSwitchCase="7"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype01>
                 <app-datatype08 *ngSwitchCase="8"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype08>

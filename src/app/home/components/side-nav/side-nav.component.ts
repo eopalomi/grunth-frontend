@@ -50,7 +50,7 @@ export class SideNavComponent implements OnInit {
 
           objItems.label       = element.displayName;
           objItems.icon        = element.iconNamePrimeNg;
-          objItems.routerLink  =  ['/' + element.route];
+          objItems.routerLink  =  ['/home/' + element.route];
           objItems.queryParams =  {'nu_conten': element.id_conten};
 
           objItemArr.push(objItems);

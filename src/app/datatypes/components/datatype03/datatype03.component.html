@@ -1,1 +1,14 @@
-<i [class]="registInfo.regist_icon" [style.color]="registInfo.regist_color" [style.fontSize]="'15px'"></i>
+<!-- Validar Tipo de Icono -->
+<ng-container *ngIf="registInfo.regist_dialogCon; then iconButton; else iconReadOnly"></ng-container>
+
+<!-- Icono con Ejecucion de Boton -->
+<ng-template #iconButton>
+    <a href="javascript:void(0)">
+        <i [class]="registInfo.regist_icon" [style.color]="registInfo.regist_color" [style.fontSize]="'15px'" (click)="onClick()"></i>
+    </a>    
+</ng-template>
+
+<!-- Icono solo de Lectura -->
+<ng-template #iconReadOnly>
+    <i [class]="registInfo.regist_icon" [style.color]="registInfo.regist_color" [style.fontSize]="'15px'"></i>
+</ng-template>

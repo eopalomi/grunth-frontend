@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 // Modulos
 import { HomeModule } from './home/home.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     AppRoutingModule,
     HomeModule,
+    LoginModule,
     NoopAnimationsModule
   ],
   providers: [],

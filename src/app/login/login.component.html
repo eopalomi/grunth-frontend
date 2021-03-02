@@ -1,0 +1,40 @@
+<div class="p-d-flex p-jc-center p-mt-6">
+    <p-card subheader="ACCOUNT LOGIN" [style]="{width: '360px'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="assets/usercard.png">
+        </ng-template>
+
+        <form class="p-grid p-fluid p-d-flex p-jc-center" (ngSubmit)='login(loginForm)' #loginForm="ngForm">
+            <div class="p-col-11 p-md-10">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="text" name="usuario" [(ngModel)]="usuario.user" pInputText placeholder="Enter username">         
+                </div>
+            </div>
+            <div class="p-col-11 p-md-10">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                    <input name="password" [(ngModel)]="usuario.password" type="password" pInputText placeholder="Password">         
+                </div>
+            </div>
+            <div class="p-col-11 p-md-10">
+                <div class="p-field-checkbox">
+                    <p-checkbox inputId="binary" binary="true"></p-checkbox>
+                    <label for="binary">Remember me</label>
+                </div>
+            </div>
+            
+            <div class="p-col-11 p-md-10">
+                <p-button label="Login" type="submit" [icon]="loading"></p-button>
+            </div>
+            
+        </form>
+    </p-card>
+</div>
+<p-toast position="bottom-center"></p-toast>
+
+
+<!-- 
+<pre style="color: white;">
+   {{ usuario | json}}
+</pre> -->

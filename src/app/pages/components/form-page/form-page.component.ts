@@ -7,6 +7,7 @@ import { MasterPageComponent } from '../master-page/master-page.component';
 import { DialogPageService } from '../../services/dialog-page.service';
 import { MessagePageService } from '../../services/message-page.service';
 import { PageService } from '../../services/page.service';
+import { DatatypeService } from 'src/app/datatypes/services/datatype.service';
 
 interface City {
   name: string,
@@ -42,6 +43,7 @@ export class FormPageComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    public datatypeServive: DatatypeService,
     public pageService: PageService,
     public dialogPageService: DialogPageService,
     public formBuilder: FormBuilder,
@@ -197,6 +199,7 @@ export class FormPageComponent implements OnInit, OnDestroy {
       let getDatsel : string = regist_name + "_datsel";
       let getPagRef : string = regist_name + "_pagref";
       let getPlHold : string = regist_name + "_plhold";
+      let getDiaCon : string = regist_name + "_dialog";
 
       this.datatypeInfo[regist_name] = {
         regist_name       : regist_name,
@@ -209,6 +212,7 @@ export class FormPageComponent implements OnInit, OnDestroy {
         regist_opcselect  : this.PAGE_CONFIG.data_page[0][getDatsel],
         regist_pagref     : this.PAGE_CONFIG.data_page[0][getPagRef],
         regist_plholder   : this.PAGE_CONFIG.data_page[0][getPlHold],
+        regist_dialogCon  : this.PAGE_CONFIG.data_page[0][getDiaCon],
         regist_title      : this.PAGE_CONFIG.regist_title[regist_name],
       };
     });

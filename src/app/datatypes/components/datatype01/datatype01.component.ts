@@ -16,8 +16,10 @@ import { DatatypeService } from '../../services/datatype.service';
 })
 export class Datatype01Component implements OnInit, ControlValueAccessor {
 
-  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
+  @Input() PAGE_INFO     : any; // Informacion de la Pagina 
+  @Input() DATATYPE_INFO : any; // Informacion de Configuracion del Tipo de Dato
   
+
   @Input() REGIST_NAME: any;       
   @Input() REGIST_TABLE_INFO: any;
   @Input() REGIST_FORM_INFO!: any;   
@@ -29,8 +31,6 @@ export class Datatype01Component implements OnInit, ControlValueAccessor {
 
   value!: string;
   isDisabled!: boolean;
-  onChange = (_:any) => { }
-  onTouch = () => { }
 
   constructor(private datatypeSerice: DatatypeService) { }
 
@@ -58,6 +58,10 @@ export class Datatype01Component implements OnInit, ControlValueAccessor {
     };
   }
 
+  /***** NG VALUE ACCESOR *****/
+  onChange = (_:any) => { }
+  onTouch = () => { }
+
   writeValue(value: any): void {
     if (value) {
       this.value = value || '';
@@ -83,4 +87,5 @@ export class Datatype01Component implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
+  /****************************/
 }

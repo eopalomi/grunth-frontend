@@ -52,7 +52,6 @@
                                 <app-datatype03 *ngSwitchCase="3" [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype03>
                                 <div *ngSwitchDefault>{{tableData[regist.key]}}</div>
                             </ng-container>
-                            
                         </div>    
                     </ng-template>
                     <ng-template #editableRow>
@@ -66,7 +65,7 @@
                         </p-cellEditor>
                     </ng-template>
                 </td>
-                <td *ngIf="PAGE_CONFIG.regist_button">                    
+                <td *ngIf="PAGE_CONFIG.regist_button" style="padding-top: 0px; padding-bottom: 0px;">                    
                     <button *ngFor="let buttonRow of PAGE_CONFIG.regist_button" 
                             (click)="ejecutarBoton('E', buttonRow.btn_id, buttonRow.btn_conten, tableData)" 
                             [icon]="buttonRow.btn_ico_prifaces"

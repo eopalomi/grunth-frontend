@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DialogPageService } from 'src/app/pages/services/dialog-page.service';
 import { DatatypeService } from '../../services/datatype.service';
 
 @Component({
@@ -32,7 +33,7 @@ export class Datatype03Component implements OnInit {
   onChange = (_:any) => { }
   onTouch = () => { }
 
-  constructor(private datatypeSerice: DatatypeService) {
+  constructor(private datatypeSerice: DatatypeService, private dialogPageService: DialogPageService) {
   
   }
 
@@ -52,6 +53,16 @@ export class Datatype03Component implements OnInit {
     if (this.PAGE_INFO.page_type =='T') {
       this.registInfo = this.datatypeSerice.buildDataTypeInfo(this.REGIST_NAME, this.REGIST_TABLE_INFO);
     }
+
+
+  }
+
+  onClick(){
+    console.log("entro")
+    // Si hay Popup Abrirlo
+    if (this.registInfo.regist_dialogCon) {
+      this.dialogPageService.buildDialog(this.registInfo.regist_dialogCon);
+    };
   }
 
   writeValue(value: any): void {

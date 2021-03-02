@@ -26,9 +26,9 @@ export class DialogPageService {
       // header: 'Choose a Product',
       // data:{hola: "dato nuevo", parametro: 123},
       // width: '100%',
-      showHeader: true,
-      closable: true,
-      contentStyle: {"height": "100vp", "min-width": "40vw", "padding":"0", "overflow": "auto"},
+      showHeader: false,
+      closable: false,
+      contentStyle: {"min-height": "300px", "min-width": "40vw", "padding":"0", "overflow": "auto"},
       baseZIndex: 10000
     });
 
