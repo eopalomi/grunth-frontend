@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { MessagePageService } from 'src/app/pages/services/message-page.service';
@@ -24,7 +24,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private messageService: MessageService, private messagePageService: MessagePageService) { }
 
  
-
+  tipoSlideMenu: string = 'push';
+  closeOnClickOutside: boolean = false;
+  showBackdrop: boolean = false;
   nombreModulo!: string;
 
   row_frame: object[] = [
@@ -53,12 +55,23 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.showMessage = this.messagePageService.messageObservable.subscribe((res: any) =>{
-      console.log("subscripcion al res:", res);
+      //console.log("subscripcion al res:", res);
 
       this.showMessages(res.title,res.body,res.type);
     })
 
+    const screenWidth = window.innerWidth;
 
+    if (screenWidth <= 768){
+      this.tipoSlideMenu = 'over';
+      this.showBackdrop = true;
+      this.closeOnClickOutside = true;
+    } else {
+      this.tipoSlideMenu = 'push';
+      this.showBackdrop = false;
+      this.closeOnClickOutside = false;
+    }
+    
   //   this.items = [
   //     {
   //         label: 'Options',
@@ -91,6 +104,19 @@ export class HomePageComponent implements OnInit, OnDestroy {
   //         }
   //     ]}
   // ];
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if (window.innerWidth <= 768){
+      this.tipoSlideMenu = 'over';
+      this.showBackdrop = true;
+      this.closeOnClickOutside = true;
+    } else {
+      this.tipoSlideMenu = 'push';
+      this.showBackdrop = false;
+      this.closeOnClickOutside = false;
+    }
   }
 
   showMessages(title: string, body: string, type: string) {

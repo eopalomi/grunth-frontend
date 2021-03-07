@@ -1,4 +1,4 @@
-<div *ngIf="PAGE_CONFIG" [style]="{'width': '95%', 'margin': '0 auto', 'position': 'relative'}" class="p-shadow-3">
+<div *ngIf="PAGE_CONFIG" [style]="{'width': '100%', 'margin': '0 auto', 'position': 'relative'}" class="p-shadow-3">
     <h3 class="title p-mb-1"> {{PAGE_CONFIG.page_title}} {{nuPagina}}
         <a *ngIf="ilDevMode" href="javascript:void(0)" style="margin-left: 1px;">
             <i class="pi pi-chevron-circle-down p-ml-2" [style.color]="'white'" style=" vertical-align: middle;" (click)="showRegistDev()"></i>
@@ -36,7 +36,7 @@
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-tableData>
+        <ng-template pTemplate="body" let-tableData let-rowIndex="rowIndex">
             <tr >
                 <td *ngIf="PAGE_CONFIG.checkbox_table">
                     <!-- <p-tableCheckbox [value]="tableData" [binary]="true"></p-tableCheckbox> -->
@@ -48,8 +48,8 @@
                     <ng-template #readOnlyRow>
                         <div>
                             <ng-container [ngSwitch]="PAGE_CONFIG.regist_type[regist.key]">
-                                <app-datatype02 *ngSwitchCase="2" [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype02>
-                                <app-datatype03 *ngSwitchCase="3" [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype03>
+                                <app-datatype02 *ngSwitchCase="2" [PAGE_INFO]="PAGE_INFO" [REGIST_DATA]="{'regist_data': tableData, 'regist_name': regist.key}" [(ngModel)]="tableData[regist.key]"></app-datatype02>
+                                <app-datatype03 *ngSwitchCase="3" [PAGE_INFO]="PAGE_INFO" [REGIST_DATA]="{'regist_data': tableData, 'regist_name': regist.key}" [(ngModel)]="tableData[regist.key]"></app-datatype03>
                                 <div *ngSwitchDefault>{{tableData[regist.key]}}</div>
                             </ng-container>
                         </div>    
@@ -57,7 +57,12 @@
                     <ng-template #editableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <app-datatype01 [PAGE_INFO]="PAGE_INFO" [REGIST_TABLE_INFO]="tableData" [REGIST_NAME]="regist.key" [TITLE]="PAGE_CONFIG.regist_title[regist.key]" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                                <ng-container [ngSwitch]="PAGE_CONFIG.regist_type[regist.key]">
+                                    <app-datatype01 *ngSwitchCase="1" [PAGE_INFO]="PAGE_INFO" [REGIST_DATA]="{'regist_data': tableData, 'regist_name': regist.key}" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                                    <app-datatype01 *ngSwitchCase="7" [PAGE_INFO]="PAGE_INFO" [REGIST_DATA]="{'regist_data': tableData, 'regist_name': regist.key}" [(ngModel)]="tableData[regist.key]"></app-datatype01>
+                                    <app-datatype06 *ngSwitchCase="6" [PAGE_INFO]="PAGE_INFO" [REGIST_DATA]="{'regist_data': tableData, 'regist_name': regist.key}" [(ngModel)]="tableData[regist.key]"></app-datatype06>
+                                    <div *ngSwitchDefault>{{tableData[regist.key]}}</div>
+                                </ng-container>                                
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{tableData[regist.key]}}

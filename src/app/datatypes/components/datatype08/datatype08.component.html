@@ -1,19 +1,19 @@
 <div class="p-field p-grid">
-    <label for="icon" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">{{registInfo.regist_title}}</label>
+    <label for="icon" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">{{datatypeInfo.regist_title}}</label>
     <div class="p-col-12 p-md-10">
-        <p-calendar class="p-inputtext-sm" 
-                    [showIcon]="true" 
+        <p-calendar class="p-inputtext-sm"
+                    [showIcon]="true"
                     inputId="icon"
                     [(ngModel)]="date"
-                    (onSelect)="onSelect($event)" 
+                    (onSelect)="onSelect($event)"
                     (onClearClick)="clearCalendarValues()"
                     (onClickOutside)="onTouch()"
-                    dateFormat="yy-mm-dd" 
+                    dateFormat="yy-mm-dd"
                     readonlyInput="true"
                     monthNavigator="true"
                     yearRange="1960:2030"
                     yearNavigator="true"
                     showButtonBar="true">
-            </p-calendar>
+        </p-calendar>
     </div>
 </div>

@@ -93,6 +93,14 @@ export class TablePageComponent implements OnInit {
 
 			// Data de la Tabla
 			this.tableData = this.PAGE_CONFIG.data_page;
+		}, err => {
+			console.log("error", err.error.valid);
+			
+			if (err.error.valid === false) {
+			  // this.openSnackBar("Mensaje de Error", err.error.error_stack, 'danger');
+			  console.log("error");
+			  this.showAlert("Mensaje de Error", err.error.error_stack, 'error');
+			};
 		});
 	};
 

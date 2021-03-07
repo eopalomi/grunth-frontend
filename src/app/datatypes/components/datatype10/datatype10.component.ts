@@ -1,6 +1,8 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PageService } from 'src/app/pages/services/page.service';
+import { DatatypeInfo } from '../../interfaces/datatype-info';
+import { DTypeBuilder } from '../../interfaces/dtype-builder';
 import { DatatypeService } from '../../services/datatype.service';
 
 @Component({
@@ -17,52 +19,66 @@ import { DatatypeService } from '../../services/datatype.service';
 })
 export class Datatype10Component implements OnInit, ControlValueAccessor {
 
-  @Input() PAGE_INFO: any;          // Informacion Recibida de MasterPage
-  @Input() REGIST_FORM_INFO!: any;  // Informacion Recibida de MasterPage
-  @Input() REGIST_NAME: any;       
-  @Input() REGIST_TABLE_INFO: any;
+  @Input() PAGE_INFO    : any;          // Informacion de la Pagina
+  @Input() REGIST_DATA !: DTypeBuilder; // Informacion de Configuracion del Tipo de Dato
 
-  value!: string;
-  selectedData: any;
-  filteredData: any[] = [];
-  registInfo: any = {};
-
-  isDisabled!: boolean;
-  onChange = (_:any) => { }
-  onTouch = () => { }
-
+  datatypeInfo  !: DatatypeInfo;
+  value         !: string;
+  selectedData   : any;
+  filteredData   : any[] = [];
+  
   constructor(private datatypeSerice: DatatypeService, public pageService: PageService) { }
 
   ngOnInit(): void {
-    if (this.PAGE_INFO.page_type =='F') {
-      console.log("this.REGIST_FORM_INFO", this.REGIST_FORM_INFO);
-      this.registInfo = this.REGIST_FORM_INFO;
-    }
-
-    if (this.PAGE_INFO.page_type =='T') {
-      this.registInfo = this.datatypeSerice.buildDataTypeInfo(this.REGIST_NAME, this.REGIST_TABLE_INFO);
-      // console.log("DATATYPE TABLE:", this.registInfo)
-    }
+    this.datatypeInfo = this.datatypeSerice.buildDatatypeValues(this.REGIST_DATA);
   }
 
   filterData(event: any) {
-    
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
     
-    for (let i = 0; i < this.registInfo.regist_opcselect.length; i++) {
-      let data = this.registInfo.regist_opcselect[i];
+    for (let i = 0; i < this.datatypeInfo.regist_opcselect.length; i++) {
+      let data = this.datatypeInfo.regist_opcselect[i];
       
-      if (data.no_compag.toLowerCase().indexOf(query.toLowerCase()) == 0) {  
+      if (data.no_compag?.toLowerCase().indexOf(query.toLowerCase()) == 0) {  
         filtered.push(data);
       }
     }
     
     this.filteredData = filtered;
-    console.log("console.log(this.filteredData)",this.filteredData)
   }
 
+  onSelect(value: any) {
+    let param: any ={};
+
+    this.value = value.co_compag;
+    this.onTouch();
+    this.onChange(this.value);
+
+    param["va_" + this.datatypeInfo.regist_name] = value.co_compag;
+    param["tx_" + this.datatypeInfo.regist_name] = value.no_compag;
+
+    // Agregar Parametro
+    this.pageService.addParam(param);
+    
+    // Recargar Paginas
+    if (this.datatypeInfo.regist_pagref) {
+      this.pageService.addPageRefresh(this.datatypeInfo.regist_pagref);
+    }
+  }
+
+  onInput(value: string) {
+    this.value = value;
+    
+    this.onTouch();
+    this.onChange(this.value);
+  }
+
+  /************************* NG VALUE ACCESOR *************************/
+  isDisabled!: boolean;
+  onChange = (_:any) => { }
+  onTouch = () => { }
 
   writeValue(value: any): void {
     if (value) {
@@ -80,30 +96,10 @@ export class Datatype10Component implements OnInit, ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  onSelect(value: any) {
-    this.value = value.co_compag;
-    this.onTouch();
-    this.onChange(this.value);
-
-    // console.log(" ===> ", dato_select.co_compag)
-    let param: any ={};
-
-    param["va_" + this.registInfo.regist_name] = value.co_compag;
-    param["tx_" + this.registInfo.regist_name] = value.no_compag;
-
-    // Agregar Parametro
-    this.pageService.addParam(param);
-    
-    // Recargar Paginas
-    if (this.registInfo.regist_pagref) {
-      this.pageService.addPageRefresh(this.registInfo.regist_pagref);
-    }
-  }
-
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
-
+  /**********************************************************************/
 }
 
 interface Compag {

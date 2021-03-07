@@ -31,6 +31,12 @@ export class FormPageComponent implements OnInit, OnDestroy {
   styleWidth  : number = 95;     // Ancho de Pagina
   nuPagina: string = '';
   datatypeInfo: any ={};
+
+  PAGE_DATA!:any;
+  PAGE_TITLES!:any;
+
+
+
   /** datos para cargar solo el ngprime **/
   date3!: Date;
 
@@ -57,7 +63,7 @@ export class FormPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPaginaData();
-
+    
     // Recargar Pagina
     this.pageService.enviarParamsObservable.subscribe( (res: any) =>{
       if (res.pages_to_refresh) {
@@ -166,6 +172,12 @@ export class FormPageComponent implements OnInit, OnDestroy {
 
       // Obtener los nombres de los registros (Keys del Objeto)
       this.registPage = Object.keys(this.PAGE_CONFIG.regist_title);
+
+      // Data de la Pagina
+      this.PAGE_DATA = this.PAGE_CONFIG.data_page[0];
+
+      // Titulos de la Pagina
+      this.PAGE_TITLES = this.PAGE_CONFIG.regist_title;
 
       // Crear el Formulario con los Registros de la Pagina
       this.crearFormulario();

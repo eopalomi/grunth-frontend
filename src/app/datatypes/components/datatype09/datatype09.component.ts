@@ -1,5 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DatatypeInfo } from '../../interfaces/datatype-info';
+import { DTypeBuilder } from '../../interfaces/dtype-builder';
 import { DatatypeService } from '../../services/datatype.service';
 
 @Component({
@@ -15,29 +17,22 @@ import { DatatypeService } from '../../services/datatype.service';
   ]
 })
 export class Datatype09Component implements OnInit, ControlValueAccessor {
-  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
+  @Input() PAGE_INFO    : any;          // Informacion de la Pagina
+  @Input() REGIST_DATA !: DTypeBuilder; // Informacion de Configuracion del Tipo de Dato
   
-  @Input() REGIST_NAME: any;       
-  @Input() REGIST_TABLE_INFO: any;
-  @Input() REGIST_FORM_INFO!: any;   
-  registInfo: any = {};
-
-  value!: string;
-  isDisabled!: boolean;
-  onChange = (_:any) => { }
-  onTouch = () => { }
-
+  datatypeInfo !: DatatypeInfo;
+  value        !: string;
+  
   constructor(private datatypeSerice: DatatypeService) { }
 
   ngOnInit(): void {
-    if (this.PAGE_INFO.page_type =='F') {
-      this.registInfo = this.REGIST_FORM_INFO;
-    }
-
-    if (this.PAGE_INFO.page_type =='T') {
-      this.registInfo = this.datatypeSerice.buildDataTypeInfo(this.REGIST_NAME, this.REGIST_TABLE_INFO);
-    }
+    this.datatypeInfo = this.datatypeSerice.buildDatatypeValues(this.REGIST_DATA);
   }
+
+  /************************* NG VALUE ACCESOR *************************/
+  onChange = (_:any) => { }
+  onTouch = () => { }
+  isDisabled!: boolean;
 
   writeValue(value: any): void {
     if (value) {
@@ -64,5 +59,5 @@ export class Datatype09Component implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
-
+  /**********************************************************************/
 }

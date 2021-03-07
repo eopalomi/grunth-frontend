@@ -11,7 +11,7 @@
     <!-- Container for sidebar(s) + page content -->
     <ng-sidebar-container>
         <!-- Sidebar -->
-        <ng-sidebar [(opened)]="opened" [mode]="'push'" sidebarClass="ng-side-style">
+        <ng-sidebar [(opened)]="opened" [mode]="tipoSlideMenu" [closeOnClickOutside]="closeOnClickOutside" [showBackdrop]="showBackdrop" [keyClose]="'true'" sidebarClass="ng-side-style">
             <app-side-nav></app-side-nav>
         </ng-sidebar>
 

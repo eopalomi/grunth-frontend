@@ -1,6 +1,8 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DialogPageService } from 'src/app/pages/services/dialog-page.service';
+import { DatatypeInfo } from '../../interfaces/datatype-info';
+import { DTypeBuilder } from '../../interfaces/dtype-builder';
 import { DatatypeService } from '../../services/datatype.service';
 
 @Component({
@@ -17,53 +19,28 @@ import { DatatypeService } from '../../services/datatype.service';
 })
 export class Datatype03Component implements OnInit {
 
-  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
+  @Input() PAGE_INFO    : any;          // Informacion de la Pagina
+  @Input() REGIST_DATA !: DTypeBuilder; // Informacion de Configuracion del Tipo de Dato
   
-  @Input() REGIST_NAME: any;       
-  @Input() REGIST_TABLE_INFO: any;
-  @Input() REGIST_FORM_INFO!: any;   
-  @Input() TITLE!: any;
-  
-  registInfo: any = {};
-  hideIs: boolean = false; // Esconder
-  isReadOnly: boolean = false; // Solo Lectura
+  datatypeInfo !: DatatypeInfo;
+  value        !: string;
+  isDisabled   !: boolean;
 
-  value!: string;
-  isDisabled!: boolean;
-  onChange = (_:any) => { }
-  onTouch = () => { }
-
-  constructor(private datatypeSerice: DatatypeService, private dialogPageService: DialogPageService) {
-  
-  }
+  constructor(private datatypeSerice: DatatypeService, private dialogPageService: DialogPageService) { }
 
   ngOnInit(): void {
-    if (this.PAGE_INFO.page_type =='F') {
-      this.registInfo = this.REGIST_FORM_INFO;
-
-      if (this.registInfo.regist_status == 'O') {
-        this.hideIs = true;
-      }
-
-      if (this.registInfo.regist_status == 'L') {
-        this.isReadOnly = true;
-      }
-    }
-
-    if (this.PAGE_INFO.page_type =='T') {
-      this.registInfo = this.datatypeSerice.buildDataTypeInfo(this.REGIST_NAME, this.REGIST_TABLE_INFO);
-    }
-
-
+    this.datatypeInfo  = this.datatypeSerice.buildDatatypeValues(this.REGIST_DATA);
   }
 
   onClick(){
-    console.log("entro")
-    // Si hay Popup Abrirlo
-    if (this.registInfo.regist_dialogCon) {
-      this.dialogPageService.buildDialog(this.registInfo.regist_dialogCon);
+    if (this.datatypeInfo.regist_dialogCon) { // Si hay Popup Abrirlo
+      this.dialogPageService.buildDialog(this.datatypeInfo.regist_dialogCon);
     };
   }
+
+  /************************* NG VALUE ACCESOR *************************/
+  onChange = (_: any) => { };
+  onTouch = () => { }
 
   writeValue(value: any): void {
     if (value) {
@@ -90,4 +67,5 @@ export class Datatype03Component implements OnInit {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
+  /**********************************************************************/
 }

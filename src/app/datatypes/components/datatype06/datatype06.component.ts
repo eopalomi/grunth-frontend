@@ -1,5 +1,8 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DatatypeInfo } from '../../interfaces/datatype-info';
+import { DTypeBuilder } from '../../interfaces/dtype-builder';
+import { DatatypeService } from '../../services/datatype.service';
 
 @Component({
   selector: 'app-datatype06',
@@ -15,52 +18,45 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class Datatype06Component implements OnInit, ControlValueAccessor, OnChanges {
   
-  @Input() PAGE_INFO: any;       // Informacion Recibida de MasterPage
-  @Input() REGIST_FORM_INFO!: any;       // Informacion Recibida de MasterPage
-  select_options!: Compag[];
-  selected!: Compag;
-  registInfo: any = {};
-  placeHolder!: string;
+  @Input() PAGE_INFO    : any;          // Informacion de la Pagina
+  @Input() REGIST_DATA !: DTypeBuilder; // Informacion de Configuracion del Tipo de Dato
 
-  constructor() { }
+  datatypeInfo   !: DatatypeInfo;
+  select_options !: Compag[];
+  selected       !: Compag;
+
+  constructor(private datatypeSerice: DatatypeService) { }
 
   ngOnInit(): void {
-    if (this.PAGE_INFO.page_type =='F') {
-      this.registInfo = this.REGIST_FORM_INFO;
-    }
+    this.datatypeInfo = this.datatypeSerice.buildDatatypeValues(this.REGIST_DATA);
 
-    if (!this.REGIST_FORM_INFO.regist_plholder){
-      this.placeHolder = 'seleccione';
-    } else {
-      this.placeHolder = this.REGIST_FORM_INFO.regist_plholder;
-    };
+    // Arreglando el PlaceHolder
+    this.datatypeInfo.regist_plholder = this.datatypeInfo.regist_plholder == '' ? 'Seleccione' : this.datatypeInfo.regist_plholder;
     
-    console.log("=====================> regist_opcselect", this.registInfo);
-    this.select_options = this.REGIST_FORM_INFO.regist_opcselect;
-    
-    this.selected = this.select_options?.find(value => value.co_compag === this.REGIST_FORM_INFO.regist_value)!;
+    this.selected = this.datatypeInfo.regist_opcselect?.find(value => value.co_compag === this.datatypeInfo.regist_value)!;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //throw new Error('Method not implemented.');
-    //console.log('Method not implemented.', this.DATATYPE_INFO);
-    //console.log('ngChanges',this.DATATYPE_INFO, this.DATATYPE_INFO.idpage_datatype);
-    //console.log('changes',changes);
-    let cur;
-    let prev;
-
+    let currentRegist;
+    let previusRegist;
+    
     for (let propName in changes) {
       let chng = changes[propName];
-      cur  = JSON.stringify(chng.currentValue);
-      prev = JSON.stringify(chng.previousValue);
+      
+      currentRegist  = chng.currentValue;
+      previusRegist  = chng.previousValue;
     }
+    
+    if (currentRegist !== undefined && previusRegist !== undefined) {
+      if (JSON.stringify(currentRegist) !== JSON.stringify(previusRegist)) {
+        this.datatypeInfo = this.datatypeSerice.buildDatatypeValues(currentRegist);
 
-    if (cur !== prev){
-      console.log("===> Actualizando Datatype 06 - select", this.REGIST_FORM_INFO.regist_opcselect, this.REGIST_FORM_INFO.regist_value)
-      this.select_options = this.REGIST_FORM_INFO.regist_opcselect;
+        // Arreglando el PlaceHolder
+        this.datatypeInfo.regist_plholder = this.datatypeInfo.regist_plholder == '' ? 'Seleccione' : this.datatypeInfo.regist_plholder;
 
-      this.selected = this.select_options?.find(value => value.co_compag === this.REGIST_FORM_INFO.regist_value)!;
-    }    
+        this.selected = this.datatypeInfo.regist_opcselect?.find(value => value.co_compag === this.datatypeInfo.regist_value)!;
+      }
+    }
   }
   
   setSelect(value: Compag) {
@@ -81,7 +77,6 @@ export class Datatype06Component implements OnInit, ControlValueAccessor, OnChan
   writeValue(value: any): void {
     if (value) {
       // this.selected.co_compag = value;
-      // this.selected.no_compag = value;
     }
   }
 
@@ -102,11 +97,6 @@ export class Datatype06Component implements OnInit, ControlValueAccessor, OnChan
 /****************************************************/
 /****************** INTERFACES **********************/
 /****************************************************/
-interface Select {
-  select_key: string | null,
-  select_value: string | null
-};
-
 interface Compag {
   co_compag: string | null,
   no_compag: string | null

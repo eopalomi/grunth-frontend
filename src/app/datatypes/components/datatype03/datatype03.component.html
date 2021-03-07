@@ -1,14 +1,46 @@
-<!-- Validar Tipo de Icono -->
-<ng-container *ngIf="registInfo.regist_dialogCon; then iconButton; else iconReadOnly"></ng-container>
 
-<!-- Icono con Ejecucion de Boton -->
-<ng-template #iconButton>
-    <a href="javascript:void(0)">
-        <i [class]="registInfo.regist_icon" [style.color]="registInfo.regist_color" [style.fontSize]="'15px'" (click)="onClick()"></i>
-    </a>    
-</ng-template>
 
-<!-- Icono solo de Lectura -->
-<ng-template #iconReadOnly>
-    <i [class]="registInfo.regist_icon" [style.color]="registInfo.regist_color" [style.fontSize]="'15px'"></i>
-</ng-template>
+<ng-container *ngIf="PAGE_INFO.page_type =='T'">
+    <!-- Validar Tipo de Icono -->
+    <ng-container *ngIf="datatypeInfo.regist_dialogCon; then iconButton; else iconReadOnly"></ng-container>
+
+    <!-- Icono con Ejecucion de Boton -->
+    <ng-template #iconButton>
+        <a href="javascript:void(0)">
+            <i [class]="datatypeInfo.regist_icon" [style.color]="datatypeInfo.regist_color" [style.fontSize]="'15px'" (click)="onClick()"></i>
+        </a>    
+    </ng-template>
+
+    <!-- Icono solo de Lectura -->
+    <ng-template #iconReadOnly>
+        <i [class]="datatypeInfo.regist_icon" [style.color]="datatypeInfo.regist_color" [style.fontSize]="'15px'"></i>
+    </ng-template>
+</ng-container>
+
+<ng-container *ngIf="PAGE_INFO.page_type =='F'">
+    <!-- Validar Tipo de Icono -->
+    <ng-container *ngIf="datatypeInfo.regist_dialogCon; then iconButton; else iconReadOnly"></ng-container>
+    
+    <!-- Icono con Ejecucion de Boton -->
+    <ng-template #iconButton>
+        <div class="p-field p-grid" [ngClass]="{'hide': hideIs}">
+            <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0" for="lastname4">{{datatypeInfo.regist_title}}</label>
+            <div class="p-col-12 p-md-10">
+                <a href="javascript:void(0)">
+                    <i [class]="datatypeInfo.regist_icon" [style.color]="datatypeInfo.regist_color" [style.fontSize]="'15px'" (click)="onClick()"></i>
+                </a>  
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Icono solo de Lectura -->
+    <ng-template #iconReadOnly>
+        <div class="p-field p-grid" [ngClass]="{'hide': hideIs}">
+            <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0" for="lastname4">{{datatypeInfo.regist_title}}</label>
+            <div class="p-col-12 p-md-10">
+                <i [class]="datatypeInfo.regist_icon" [style.color]="datatypeInfo.regist_color" [style.fontSize]="'15px'"></i>        
+            </div>
+        </div>
+    </ng-template>
+</ng-container>
+

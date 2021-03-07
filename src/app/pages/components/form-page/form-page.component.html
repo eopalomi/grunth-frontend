@@ -9,12 +9,13 @@
             <ng-container [ngSwitch]="PAGE_CONFIG.regist_type[registName]">
 
                 <!-- <ng-container *ngIf="datatypeServive.buildDatatypeInfo_v2(registName, PAGE_CONFIG.regist_title[regist_name], PAGE_CONFIG.data_page[0]); let info_dt"></ng-container> -->
-                
-                <app-datatype06 *ngSwitchCase="6"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype06>
-                <app-datatype01 *ngSwitchCase="7"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype01>
-                <app-datatype08 *ngSwitchCase="8"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype08>
-                <app-datatype09 *ngSwitchCase="9"  [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype09>
-                <app-datatype10 *ngSwitchCase="10" [PAGE_INFO]="PAGE_INFO"  [REGIST_FORM_INFO]="datatypeInfo[registName]" [formControlName]="registName"></app-datatype10>
+                <app-datatype01 *ngSwitchCase="1"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype01>
+                <app-datatype03 *ngSwitchCase="3"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype03>
+                <app-datatype06 *ngSwitchCase="6"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype06>
+                <app-datatype01 *ngSwitchCase="7"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype01>
+                <app-datatype08 *ngSwitchCase="8"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype08>
+                <app-datatype09 *ngSwitchCase="9"  [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype09>
+                <app-datatype10 *ngSwitchCase="10" [PAGE_INFO]="PAGE_INFO"  [REGIST_DATA]="{'regist_data': PAGE_DATA, 'regist_name': registName, 'regist_title': PAGE_TITLES[registName]}" [formControlName]="registName"></app-datatype10>
                 <div *ngSwitchDefault>Sin tipo dato</div>
             </ng-container>
         </ng-container>
